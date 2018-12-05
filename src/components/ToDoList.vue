@@ -2,12 +2,12 @@
   <div class="todo-list">
     <h1>My To-Do list</h1>
     <div>
-      <div class="card-panel todo" v-for="todo in todolist" :key="todo._id">
+      <div class="card-panel todo" v-for="(todo, index) in todolist" :key="`todo-${index}`">
         <h3>{{todo.title}}</h3>
         <div>
-          <p v-for="task in todo.tasks" v-bind:key="task.taskTitle">
+          <p v-for="(task, index) in todo.tasks" v-bind:key="`task-${index}`">
             <label>
-              <input type="checkbox" v-model="task.completed">
+              <input type="checkbox" v-model="task.completed" v-bind:click="saveTodo()">
               <span v-bind:class="{completed: task.completed}">{{task.taskTitle}}</span>
             </label>
           </p>
@@ -24,13 +24,14 @@
     <div class="card-panel">
       <form v-on:submit="addTodo">
         <div class="input-field">
-          <input placeholder="Todo title" class="validate" v-model="newTodo.title">
+          <input placeholder="Todo title" class="validate" required v-model="newTodo.title">
         </div>
         <div class="input-field">
           <textarea
-            placeholder="Enter tasks, seperate with Enter/Return"
+            placeholder="Enter tasks, separate with Enter/Return"
             v-model="newTodo.tasks"
             class="materialize-textarea"
+            required
           ></textarea>
         </div>
         <button>Create</button>
@@ -49,7 +50,10 @@ export default {
     };
   },
   methods: {
-    addTodo: function(e) {
+    addTodo(e) {
+      if (!this.newTodo) {
+        return;
+      }
       this.todolist.push({
         title: this.newTodo.title,
         tasks: this.newTodo.tasks
@@ -57,12 +61,27 @@ export default {
           .map(element => ({ taskTitle: element, completed: false }))
       });
       e.preventDefault();
+      this.saveTodo();
     },
-    deleteTodo: function(todo) {
+    deleteTodo(todo) {
       this.todolist.splice(this.todolist.indexOf(todo), 1);
+      this.saveTodo();
     },
-    checkCompletion: function(todo) {
+    checkCompletion(todo) {
       return todo.tasks.every(({ completed }) => completed === true);
+    },
+    saveTodo() {
+      const parsed = JSON.stringify(this.todolist);
+      localStorage.setItem("localtodolist", parsed);
+    }
+  },
+  mounted() {
+    if (localStorage.getItem("localtodolist")) {
+      try {
+        this.todolist = JSON.parse(localStorage.getItem("localtodolist"));
+      } catch (e) {
+        localStorage.removeItem("localtodolist");
+      }
     }
   }
 };
