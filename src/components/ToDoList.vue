@@ -33,7 +33,7 @@
     <div class="card-panel">
       <form v-on:submit="addTodo">
         <div class="input-field">
-          <input placeholder="Todo title" class="validate" required v-model="newTodo.title">
+          <input placeholder="To-do title" class="validate" required v-model="newTodo.title">
         </div>
         <div class="input-field">
           <textarea
