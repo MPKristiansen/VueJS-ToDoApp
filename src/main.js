@@ -24,17 +24,17 @@ new Vue({
   router,
   template: `
     <div id="app">
-      <nav>
-        <div class="nav-wrapper">
-          <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/todos">My To-Do list</router-link></li>
-          </ul>
-        </div>
-      </nav>
-      <div class="container">
-        <router-view></router-view>
+      <div class="navbar-fixed">
+        <nav>
+          <div class="nav-wrapper blue darken-2">
+            <ul>
+              <li><router-link to="/">Home</router-link></li>
+              <li><router-link to="/todos">My To-Do list</router-link></li>
+            </ul>
+          </div>
+        </nav>
       </div>
+        <router-view></router-view>
     </div>
     `
 }).$mount("#app");

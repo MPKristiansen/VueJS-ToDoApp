@@ -1,9 +1,16 @@
 <template>
-  <div class="todo-list">
-    <h1>My To-Do list</h1>
-    <div>
-      <div class="card-panel todo" v-for="(todo, index) in todolist" :key="`todo-${index}`">
-        <h3>{{todo.title}}</h3>
+  <div class="container">
+    <div class="row">
+      <h1>My To-do list</h1>
+      <div
+        class="card-panel todo z-depth-2"
+        v-for="(todo, index) in todolist"
+        :key="`todo-${index}`"
+      >
+        <div class="todo-title">
+          <h3>{{todo.title}}</h3>
+        </div>
+        <div class="divider"></div>
         <div>
           <p v-for="(task, index) in todo.tasks" v-bind:key="`task-${index}`">
             <label>
@@ -13,12 +20,14 @@
           </p>
         </div>
         <p v-if="checkCompletion(todo)">
-          <button v-on:click="deleteTodo(todo)">Remove</button>
+          <button v-on:click="deleteTodo(todo)" class="waves-effect waves-light btn red">
+            <i class="material-icons left">cancel</i>Remove
+          </button>
         </p>
       </div>
       <div v-if="todolist.length < 1">
         <p>You have nothing to do :(</p>
-        <p>Create a new To-Do below.</p>
+        <p>Create a new To-do below.</p>
       </div>
     </div>
     <div class="card-panel">
@@ -28,13 +37,13 @@
         </div>
         <div class="input-field">
           <textarea
-            placeholder="Enter tasks, separate with Enter/Return"
+            placeholder="Enter 1 task per line"
             v-model="newTodo.tasks"
             class="materialize-textarea"
             required
           ></textarea>
         </div>
-        <button>Create</button>
+        <button class="btn green">Create</button>
       </form>
     </div>
   </div>
