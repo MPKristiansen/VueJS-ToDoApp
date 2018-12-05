@@ -1,6 +1,6 @@
 <template>
   <div class="banner fullscreen">
-    <div class="center-align">
+    <div class="center-align container">
       <h1>My To-do App</h1>
       <div class="divider"></div>
       <h5>Create to-do lists with multiple tasks.</h5>
